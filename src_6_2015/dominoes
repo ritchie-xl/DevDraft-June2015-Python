@@ -1,0 +1,64 @@
+# your code goes here
+import sys
+def main():
+    line1 = sys.stdin.readline()
+    line2 = sys.stdin.readline()
+
+    # line1="11"
+    # line2="0 0 4 1 0 2 0 1 0 0 3"
+
+    num = int(line1.strip())
+    lens = line2.strip().split(" ")
+
+    if num != len(lens):
+        print "Please input correct data!\n"
+        exit(1)
+
+    lens = [int(x) for x in lens]
+
+    right = []
+    left=[]
+    for i in range(0,num):
+        if lens[i]!=0 and i+1!=num:
+            j=i+1
+            max = lens[i]
+            step = 1
+            while j < num:
+                if lens[j] !=0 and step + lens[j] > max:
+                    max = step+lens[j]
+                if step == max and lens[j]==0 or j+1==num:
+                    right.append(max)
+                    break
+                step = step + 1
+                j=j+1
+        else:
+            right.append(lens[i])
+
+        if lens[i] != 0 and i!=0:
+            j=i-1
+            max = lens[i]
+            step = 1
+            while j >=0:
+                if lens[j]!=0 and step + lens[j]>max:
+                    max = step + lens[j]
+                if step == max and lens[j]==0 or j==0:
+                    left.append(max)
+                    break
+                step = step + 1
+                j=j-1
+        else:
+            left.append(lens[i])
+
+    rText = ""
+    lText = ""
+    for i in range(0,num-1):
+        rText = rText+str(right[i])+" "
+        lText = lText+str(left[i])+" "
+
+    rText = rText+str(right[num-1])
+    lText = lText+str(left[num-1])
+    print rText
+    print lText
+
+if __name__ == "__main__":
+    main()

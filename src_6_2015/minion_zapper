@@ -1,0 +1,47 @@
+import sys
+def main():
+    # Receive and parse the input
+    line1 = sys.stdin.readline()
+    line2 = sys.stdin.readline()
+    (numOfMinions, maxDmg, dmgReduction) = line1.strip().split(" ")
+    minionsHit = line2.strip().split(" ")
+
+    # Change all values' data type to integer
+    numOfMinions = int(numOfMinions)
+    maxDmg = int(maxDmg)
+    dmgReduction = int(dmgReduction)
+
+    # Check the the number of the minions
+    if numOfMinions != len(minionsHit):
+        print "Please enter correct minios health!\n"
+        exit(1)
+
+    # Construct the list for all the possible spell damages in ascending order
+    dmg = range(maxDmg-maxDmg/dmgReduction*dmgReduction, maxDmg+1, dmgReduction)
+
+    # Sort the minions hit points' list in ascending order
+    minionsHit = sorted([int(x) for x in minionsHit])
+
+    maxHit = 0
+
+    # Loop the two lists until any list's length become zero
+    while len(dmg) >0 and len(minionsHit)>0:
+        # Pop the maximum values from both lists
+        # if the maximum value from spell damage list
+        # is greater than or equal to the maximum value
+        # from the minions hit points list
+        if dmg[-1] >= minionsHit[-1]:
+            maxHit = maxHit + 1
+            dmg.pop()
+            minionsHit.pop()
+        else:
+            # Pop the max value from minions' hit point list
+            # if the maximum value from spell damage list
+            # is smaller than the maximum value
+            # from the minions hit points list
+            minionsHit.pop()
+
+    print maxHit
+
+if __name__ == "__main__":
+    main()
